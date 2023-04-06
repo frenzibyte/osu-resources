@@ -19,8 +19,10 @@ layout(std140, set = 1, binding = 0) uniform m_CursorTrailParameters
 
 void main(void)
 {
+    InitMasking(m_MaskingIndex);
+
     // Transform to position to masking space.
-    vec3 maskingPos = GetMaskingInfo(m_MaskingIndex).ToMaskingSpace * vec3(m_Position, 1.0);
+    vec3 maskingPos = g_MaskingInfo.ToMaskingSpace * vec3(m_Position, 1.0);
     v_MaskingPosition = maskingPos.xy / maskingPos.z;
 
     v_Colour = vec4(m_Colour.rgb, m_Colour.a * pow(clamp(m_Time - g_FadeClock, 0.0, 1.0), g_FadeExponent));
